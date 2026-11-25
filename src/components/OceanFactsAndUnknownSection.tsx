@@ -23,10 +23,10 @@ export const OceanFactsAndUnknownSection: React.FC<
         <div className="max-w-7xl mx-auto">
           <div className="max-w-3xl mb-12">
             <p className="text-xs font-mono-tabular uppercase tracking-widest text-cyan-400 mb-2">
-              05. PHYSICAL OCEANOGRAPHY & TELEMETRY
+              05. PHYSICAL OCEANOGRAPHY &amp; TELEMETRY
             </p>
             <h2 className="font-display text-3xl sm:text-4xl font-bold text-white mb-4">
-              Ocean Facts: Pressure, Light, Temperature & Geography
+              Ocean Facts: Pressure, Light, Temperature &amp; Geography
             </h2>
             <p className="text-slate-300 text-base leading-relaxed">
               The physical parameters of the deep sea govern every biological
@@ -130,7 +130,7 @@ export const OceanFactsAndUnknownSection: React.FC<
               06. FRONTIERS OF DEEP-SEA SCIENCE
             </p>
             <h2 className="font-display text-3xl sm:text-4xl font-bold text-white mb-4">
-              Explore the Unknown: Scientific Expeditions & Frontiers
+              Discoveries: Scientific Expeditions &amp; Frontiers
             </h2>
             <p className="text-slate-300 text-base leading-relaxed">
               Over 74% of Earth’s seabed remains unmapped at high direct-sonar
@@ -189,43 +189,6 @@ export const OceanFactsAndUnknownSection: React.FC<
           </div>
         </div>
       </section>
-
-      {/* Clean Editorial Footer (No Ornamental Telemetry Clutter) */}
-      <footer className="py-12 px-6 bg-[#02050c] border-t border-slate-800/80 text-xs text-slate-400">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <span className="font-display font-bold text-white tracking-wider">
-              THALASSA
-            </span>
-            <span aria-hidden="true">·</span>
-            <span>Interactive 3D Bathymetric & Marine Biology Explorer</span>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-5">
-            <a
-              href="#dive-explorer"
-              onClick={(e) => {
-                e.preventDefault();
-                onDiveToDepth(0);
-              }}
-              className="hover:text-cyan-300 transition-colors"
-            >
-              Return to Ocean Surface (0 m)
-            </a>
-            <span aria-hidden="true">·</span>
-            <a
-              href="#dive-explorer"
-              onClick={(e) => {
-                e.preventDefault();
-                onDiveToDepth(10935);
-              }}
-              className="hover:text-cyan-300 transition-colors"
-            >
-              Jump to Challenger Deep (10,935 m)
-            </a>
-          </div>
-        </div>
-      </footer>
     </>
   );
 };

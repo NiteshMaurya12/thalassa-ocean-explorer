@@ -65,6 +65,25 @@ const OrganismVectorSilhouette: React.FC<{ org: MarineOrganismData }> = ({
           <circle cx="38" cy="-14" r="4.5" fill={org.emissiveColor} />
           <polygon points="-28,0 -42,-12 -42,12" fill={org.secondaryColor} />
         </g>
+      ) : org.modelType === 'giant_squid' || org.modelType === 'vampire_squid' ? (
+        <g transform="translate(95, 40)">
+          {/* Torpedo mantle & caudal fin */}
+          <polygon
+            points="44,0 6,-13 6,13"
+            fill={org.primaryColor}
+            stroke={org.secondaryColor}
+            strokeWidth="1.4"
+          />
+          <polygon points="48,0 36,-10 36,10" fill={org.secondaryColor} />
+          {/* Large cephalopod eye */}
+          <circle cx="-2" cy="-2" r="4.5" fill={org.secondaryColor} />
+          <circle cx="-2" cy="-2" r="2.2" fill="#090d16" />
+          {/* Trailing arms & two long feeding tentacles */}
+          <path d="M -8 -6 Q -28 -14 -46 -8" fill="none" stroke={org.secondaryColor} strokeWidth="1.5" />
+          <path d="M -8 -2 Q -34 -5 -62 -11" fill="none" stroke={org.primaryColor} strokeWidth="1.8" />
+          <path d="M -8 2 Q -34 5 -62 11" fill="none" stroke={org.primaryColor} strokeWidth="1.8" />
+          <path d="M -8 6 Q -28 14 -46 8" fill="none" stroke={org.secondaryColor} strokeWidth="1.5" />
+        </g>
       ) : org.modelType === 'giant_isopod' || org.modelType === 'amphipod' || org.modelType === 'deep_crab' ? (
         <g transform="translate(90, 40)">
           <ellipse cx="0" cy="0" rx="34" ry="13" fill={org.primaryColor} stroke={org.secondaryColor} strokeWidth="1.5" />
@@ -74,6 +93,19 @@ const OrganismVectorSilhouette: React.FC<{ org: MarineOrganismData }> = ({
           <line x1="18" y1="-12" x2="18" y2="12" stroke="#0f172a" strokeWidth="1.5" />
           <path d="M 32 -3 Q 48 -14 54 -18" fill="none" stroke={org.secondaryColor} strokeWidth="1.2" />
           <path d="M 32 3 Q 48 14 54 18" fill="none" stroke={org.secondaryColor} strokeWidth="1.2" />
+        </g>
+      ) : org.modelType === 'shark' ? (
+        <g transform="translate(90, 42)">
+          <path
+            d="M -42 0 Q -12 -15 40 0 Q -10 14 -42 0 Z"
+            fill={org.primaryColor}
+            stroke={org.secondaryColor}
+            strokeWidth="1.5"
+          />
+          <polygon points="-4,-10 4,-26 12,-9" fill={org.primaryColor} stroke={org.secondaryColor} strokeWidth="1.2" />
+          <polygon points="-40,0 -56,-17 -50,0 -54,12" fill={org.primaryColor} stroke={org.secondaryColor} strokeWidth="1.2" />
+          <polygon points="8,4 0,20 16,6" fill={org.secondaryColor} />
+          <circle cx="28" cy="-2" r="2" fill="#ffffff" />
         </g>
       ) : (
         <g transform="translate(90, 40)">
@@ -116,13 +148,14 @@ export const MarineLifeSection: React.FC<MarineLifeSectionProps> = ({
               03. CURATED BIOLOGICAL SPECIMENS
             </p>
             <h2 className="font-display text-3xl sm:text-4xl font-bold text-white mb-3">
-              Ocean Life Discovery Directory
+              Marine Life Database ({MARINE_ORGANISMS.length} Species)
             </h2>
             <p className="text-slate-300 text-base leading-relaxed">
-              Explore 15 representative marine organisms across the five depth
-              zones. Select any organism to view its scientific taxonomy and
-              verified depth notes, or pilot the 3D camera straight to its
-              habitat.
+              Explore {MARINE_ORGANISMS.length} representative marine organisms
+              across all five pelagic and benthic zones. Each dossier presents
+              verified taxonomy, habitat, trophic diet, IUCN conservation
+              status, and literature depth records alongside illustrative 3D
+              explorer coordinates.
             </p>
           </div>
 
@@ -195,19 +228,36 @@ export const MarineLifeSection: React.FC<MarineLifeSectionProps> = ({
                   <h3 className="font-display text-xl font-bold text-white">
                     {org.commonName}
                   </h3>
-                  <p className="text-xs italic text-slate-400 mb-3">
+                  <p className="text-xs italic text-slate-400 mb-2.5">
                     {org.scientificName}
                   </p>
 
-                  <p className="text-sm text-slate-300 leading-relaxed mb-4">
+                  <p className="text-sm text-slate-300 leading-relaxed mb-3.5">
                     {org.shortDescription}
                   </p>
 
-                  <div className="text-xs text-slate-400 border-t border-slate-800/80 pt-2.5 mb-4">
-                    <span className="font-semibold text-slate-300">
-                      Literature Depth Record:{' '}
-                    </span>
-                    <span>{org.verifiedDepthRecord}</span>
+                  {/* Compact Verified Diet, Conservation Status & Literature Depth Record */}
+                  <div className="text-xs text-slate-400 border-t border-slate-800/80 pt-2.5 space-y-1.5 mb-4">
+                    <div>
+                      <span className="font-semibold text-cyan-300">
+                        Verified Diet:{' '}
+                      </span>
+                      <span className="text-slate-300">{org.diet}</span>
+                    </div>
+                    <div>
+                      <span className="font-semibold text-amber-300">
+                        Conservation Status:{' '}
+                      </span>
+                      <span className="text-slate-200">
+                        {org.conservationStatus}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="font-semibold text-slate-300">
+                        Literature Depth Record:{' '}
+                      </span>
+                      <span>{org.verifiedDepthRecord}</span>
+                    </div>
                   </div>
                 </div>
 

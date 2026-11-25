@@ -4,10 +4,12 @@ export type OrganismModelType =
   | 'blue_whale'
   | 'sea_turtle'
   | 'dolphin'
+  | 'shark'
   | 'tuna'
   | 'lanternfish'
   | 'jellyfish'
   | 'sperm_whale'
+  | 'giant_squid'
   | 'anglerfish'
   | 'vampire_squid'
   | 'deep_jellyfish'
@@ -46,6 +48,10 @@ export interface MarineOrganismData {
   /** Verified literature depth range string for educational distinction */
   verifiedDepthRecord: string;
   habitat: string;
+  /** Verified trophic diet from marine biology literature */
+  diet: string;
+  /** Verified IUCN Red List status or scientific assessment note */
+  conservationStatus: string;
   shortDescription: string;
   adaptations: string[];
   sizeEstimate: string;
@@ -63,8 +69,9 @@ export interface DepthLandmark {
   id: string;
   depth: number;
   title: string;
-  category: 'zone' | 'exploration' | 'biology' | 'geology';
+  category: 'zone' | 'exploration' | 'biology' | 'geology' | 'shipwreck' | 'hydrothermal';
   description: string;
+  verifiedNote?: string;
 }
 
 export interface TrenchData {
@@ -102,4 +109,31 @@ export interface DiscoveryMilestone {
   region: string;
   summary: string;
   scientificImpact: string;
+}
+
+export interface ExplorationMapSite {
+  id: string;
+  name: string;
+  category: 'trench' | 'shipwreck' | 'hydrothermal' | 'expedition';
+  oceanBasin: string;
+  coordinates: string;
+  /** Normalized SVG map coordinates (0-1000 x, 0-500 y) */
+  mapX: number;
+  mapY: number;
+  depthMetres: number;
+  yearOrEra: string;
+  summary: string;
+  verifiedDataNote: string;
+}
+
+export interface ConservationTopic {
+  id: string;
+  title: string;
+  category: 'Research Technology' | 'Benthic Conservation' | 'Climate & Chemistry' | 'Global Governance';
+  targetDepthMetres: number;
+  keyMetric: string;
+  metricLabel: string;
+  summary: string;
+  scientificContext: string;
+  actionableInsight: string;
 }

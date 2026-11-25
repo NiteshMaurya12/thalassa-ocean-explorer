@@ -18,6 +18,8 @@ export const Navigation: React.FC<NavigationProps> = ({
     { label: 'Marine Life', id: 'marine-life' },
     { label: 'Deepest Places', id: 'deepest-places' },
     { label: 'Discoveries', id: 'discoveries' },
+    { label: 'Exploration Map', id: 'exploration-map' },
+    { label: 'Conservation', id: 'research-conservation' },
   ];
 
   const handleNavClick = (
@@ -31,7 +33,7 @@ export const Navigation: React.FC<NavigationProps> = ({
 
   return (
     <header className="fixed top-0 left-0 right-0 z-40 bg-[#030812]/95 border-b border-slate-800/80">
-      <div className="max-w-7xl mx-auto flex items-center justify-between gap-8 px-6 py-3.5">
+      <div className="max-w-7xl mx-auto flex items-center justify-between gap-4 px-5 py-3">
         {/* Zone 1: Single text element wordmark */}
         <a
           href="#home"
@@ -41,10 +43,10 @@ export const Navigation: React.FC<NavigationProps> = ({
           THALASSA
         </a>
 
-        {/* Zone 2: 5 concise single-line text navigation links */}
+        {/* Zone 2: Concise single-line text navigation links */}
         <nav
           aria-label="Primary Navigation"
-          className="hidden md:flex items-center gap-7 text-sm font-medium text-slate-300"
+          className="hidden lg:flex items-center gap-5 text-xs xl:text-sm font-medium text-slate-300"
         >
           {navItems.map((item) => (
             <a
@@ -66,7 +68,7 @@ export const Navigation: React.FC<NavigationProps> = ({
               setMobileMenuOpen(false);
               onStartDiving();
             }}
-            className="px-4 py-2 text-xs font-semibold tracking-wider text-slate-950 bg-cyan-400 rounded-md hover:bg-cyan-300 transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+            className="px-3.5 py-1.5 text-xs font-semibold tracking-wider text-slate-950 bg-cyan-400 rounded-md hover:bg-cyan-300 transition-colors whitespace-nowrap shrink-0 cursor-pointer"
           >
             START DIVING
           </button>
@@ -76,23 +78,23 @@ export const Navigation: React.FC<NavigationProps> = ({
             aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
             aria-expanded={mobileMenuOpen}
             onClick={() => setMobileMenuOpen((prev) => !prev)}
-            className="md:hidden p-2 text-slate-300 hover:text-white rounded-md border border-slate-800"
+            className="lg:hidden p-2 text-slate-300 hover:text-white rounded-md border border-slate-800"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </div>
 
-      {/* Responsive mobile drawer */}
+      {/* Responsive mobile/tablet drawer */}
       {mobileMenuOpen && (
         <nav
           aria-label="Mobile Navigation"
-          className="md:hidden bg-[#040a17] border-b border-slate-800 px-6 py-4 flex flex-col gap-3"
+          className="lg:hidden bg-[#040a17] border-b border-slate-800 px-6 py-4 flex flex-col gap-2.5"
         >
           <a
             href="#home"
             onClick={(e) => handleNavClick(e, 'home')}
-            className="py-2 text-sm font-medium text-slate-200 hover:text-cyan-300"
+            className="py-1.5 text-sm font-medium text-slate-200 hover:text-cyan-300"
           >
             Home
           </a>
@@ -101,7 +103,7 @@ export const Navigation: React.FC<NavigationProps> = ({
               key={item.id}
               href={`#${item.id}`}
               onClick={(e) => handleNavClick(e, item.id)}
-              className="py-2 text-sm font-medium text-slate-200 hover:text-cyan-300"
+              className="py-1.5 text-sm font-medium text-slate-200 hover:text-cyan-300"
             >
               {item.label}
             </a>

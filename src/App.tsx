@@ -12,6 +12,8 @@ import { OceanZonesSection } from './components/OceanZonesSection';
 import { MarineLifeSection } from './components/MarineLifeSection';
 import { DeepestPlacesSection } from './components/DeepestPlacesSection';
 import { OceanFactsAndUnknownSection } from './components/OceanFactsAndUnknownSection';
+import { OceanExplorationMapSection } from './components/OceanExplorationMapSection';
+import { ResearchConservationSection } from './components/ResearchConservationSection';
 import { MAX_OCEAN_DEPTH } from './data/oceanData';
 import { MarineOrganismData } from './types/ocean';
 import { clampDepth, getZoneForDepth } from './utils/oceanMath';
@@ -102,7 +104,6 @@ export default function App() {
       lastTime = now;
 
       setCurrentDepth((prev) => {
-        // Scale descent velocity smoothly with depth & user speed multiplier
         const baseRate = prev < 200 ? 28 : prev < 1000 ? 95 : 240;
         const next = clampDepth(prev + baseRate * descentSpeed * dt);
         if (next >= MAX_OCEAN_DEPTH) {
@@ -250,6 +251,7 @@ export default function App() {
               setIsAutoDescending(false);
               setSelectedOrganism(org);
             }}
+            onSelectDepth={handleChangeDepth}
           />
 
           {/* Hero Surface Overlay (Fades out smoothly when diving starts) */}
@@ -298,7 +300,7 @@ export default function App() {
           onSelectDepth={handleJumpToDepthFromSection}
         />
 
-        {/* Section A: Explore Ocean Zones */}
+        {/* Section: Ocean Zones */}
         <OceanZonesSection
           onDiveToDepth={handleJumpToDepthFromSection}
           onSelectOrganism={(org) => {
@@ -307,7 +309,7 @@ export default function App() {
           }}
         />
 
-        {/* Section C: Ocean Life Discovery */}
+        {/* Section: Marine Life Database */}
         <MarineLifeSection
           selectedOrganism={selectedOrganism}
           onInspectOrganism={(org) => {
@@ -317,13 +319,82 @@ export default function App() {
           onExploreOrganismIn3D={handleExploreOrganismDepthRange}
         />
 
-        {/* Section B: Deepest Places on Earth */}
+        {/* Section: Deepest Places on Earth */}
         <DeepestPlacesSection onDiveToDepth={handleJumpToDepthFromSection} />
 
-        {/* Section D & E: Ocean Facts & Explore the Unknown + Footer */}
+        {/* Sections: Ocean Facts & Discoveries */}
         <OceanFactsAndUnknownSection
           onDiveToDepth={handleJumpToDepthFromSection}
         />
+
+        {/* Section: Global Ocean Exploration Map */}
+        <OceanExplorationMapSection
+          onDiveToDepth={handleJumpToDepthFromSection}
+        />
+
+        {/* Section: Deep-Ocean Research and Conservation */}
+        <ResearchConservationSection
+          onDiveToDepth={handleJumpToDepthFromSection}
+        />
+
+        {/* Clean Editorial Footer */}
+        <footer className="py-12 px-6 bg-[#02050c] border-t border-slate-800/80 text-xs text-slate-400">
+          <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <span className="font-display font-bold text-white tracking-wider">
+                THALASSA
+              </span>
+              <span aria-hidden="true">·</span>
+              <span>Interactive 3D Bathymetric &amp; Marine Biology Explorer</span>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-5">
+              <a
+                href="#dive-explorer"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleJumpToDepthFromSection(0);
+                }}
+                className="hover:text-cyan-300 transition-colors"
+              >
+                Return to Ocean Surface (0 m)
+              </a>
+              <span aria-hidden="true">·</span>
+              <a
+                href="#exploration-map"
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToSection('exploration-map');
+                }}
+                className="hover:text-cyan-300 transition-colors"
+              >
+                Exploration Map
+              </a>
+              <span aria-hidden="true">·</span>
+              <a
+                href="#research-conservation"
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToSection('research-conservation');
+                }}
+                className="hover:text-cyan-300 transition-colors"
+              >
+                Research &amp; Conservation
+              </a>
+              <span aria-hidden="true">·</span>
+              <a
+                href="#dive-explorer"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleJumpToDepthFromSection(10935);
+                }}
+                className="hover:text-cyan-300 transition-colors"
+              >
+                Jump to Challenger Deep (10,935 m)
+              </a>
+            </div>
+          </div>
+        </footer>
       </main>
     </div>
   );

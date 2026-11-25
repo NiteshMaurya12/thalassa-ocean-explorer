@@ -175,6 +175,91 @@ export function createMarineOrganismMesh(
       break;
     }
 
+    case 'shark': {
+      // 1. Torpedo dorsal fuselage
+      const torso = new THREE.Mesh(
+        new THREE.CapsuleGeometry(0.36, 1.65, 10, 16),
+        primaryMat
+      );
+      torso.rotation.z = Math.PI / 2;
+      root.add(torso);
+
+      // 2. Countershaded white ventral belly
+      const belly = new THREE.Mesh(
+        new THREE.CapsuleGeometry(0.3, 1.45, 8, 12),
+        secondaryMat
+      );
+      belly.rotation.z = Math.PI / 2;
+      belly.position.set(0.08, -0.14, 0);
+      root.add(belly);
+
+      // 3. Conical lamnid snout
+      const snout = new THREE.Mesh(
+        new THREE.ConeGeometry(0.34, 0.72, 12),
+        primaryMat
+      );
+      snout.rotation.z = -Math.PI / 2;
+      snout.position.set(1.12, 0.02, 0);
+      root.add(snout);
+
+      // 4. Iconic high triangular first dorsal fin
+      const dorsal = new THREE.Mesh(
+        new THREE.ConeGeometry(0.24, 0.68, 6),
+        primaryMat
+      );
+      dorsal.position.set(-0.05, 0.56, 0);
+      dorsal.rotation.z = 0.25;
+      root.add(dorsal);
+
+      // 5 & 6. Broad delta pectoral fins
+      const pecGeo = new THREE.BoxGeometry(0.42, 0.06, 0.92);
+      const pecL = new THREE.Mesh(pecGeo, primaryMat);
+      pecL.position.set(0.25, -0.22, 0.55);
+      pecL.rotation.y = -0.3;
+      pecL.rotation.x = 0.18;
+      const pecR = pecL.clone();
+      pecR.position.z = -0.55;
+      pecR.rotation.y = 0.3;
+      pecR.rotation.x = -0.18;
+      root.add(pecL, pecR);
+
+      // 7. Animated caudal peduncle & crescent heterocercal tail fin
+      const tailGroup = new THREE.Group();
+      tailGroup.position.set(-0.95, 0, 0);
+      const peduncle = new THREE.Mesh(
+        new THREE.ConeGeometry(0.28, 0.85, 10),
+        primaryMat
+      );
+      peduncle.rotation.z = Math.PI / 2;
+      peduncle.position.x = -0.35;
+      tailGroup.add(peduncle);
+
+      const upperLobe = new THREE.Mesh(
+        new THREE.BoxGeometry(0.28, 0.78, 0.06),
+        primaryMat
+      );
+      upperLobe.position.set(-0.82, 0.18, 0);
+      upperLobe.rotation.z = 0.35;
+      const lowerLobe = new THREE.Mesh(
+        new THREE.BoxGeometry(0.24, 0.52, 0.06),
+        secondaryMat
+      );
+      lowerLobe.position.set(-0.78, -0.22, 0);
+      lowerLobe.rotation.z = -0.38;
+      tailGroup.add(upperLobe, lowerLobe);
+      root.add(tailGroup);
+      animParts.push(tailGroup);
+
+      // 8 & 9. Dark eyes
+      const eyeGeo = new THREE.SphereGeometry(0.048, 8, 8);
+      const eyeL = new THREE.Mesh(eyeGeo, darkEyeMat);
+      eyeL.position.set(0.88, 0.08, 0.28);
+      const eyeR = eyeL.clone();
+      eyeR.position.z = -0.28;
+      root.add(eyeL, eyeR);
+      break;
+    }
+
     case 'dolphin':
     case 'tuna': {
       const isTuna = org.modelType === 'tuna';
@@ -400,6 +485,91 @@ export function createMarineOrganismMesh(
       break;
     }
 
+    case 'giant_squid': {
+      // 1. Elongated torpedo mantle
+      const mantle = new THREE.Mesh(
+        new THREE.ConeGeometry(0.42, 1.65, 14),
+        primaryMat
+      );
+      mantle.rotation.z = -Math.PI / 2;
+      mantle.position.set(0.65, 0, 0);
+      root.add(mantle);
+
+      // 2. Arrowhead caudal stabilizing fin at mantle tip
+      const tailFin = new THREE.Mesh(
+        new THREE.ConeGeometry(0.45, 0.55, 4),
+        secondaryMat
+      );
+      tailFin.rotation.z = -Math.PI / 2;
+      tailFin.scale.set(1, 0.25, 1.3);
+      tailFin.position.set(1.32, 0, 0);
+      root.add(tailFin);
+
+      // 3. Cephalic head collar
+      const head = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.32, 0.36, 0.45, 12),
+        primaryMat
+      );
+      head.rotation.z = Math.PI / 2;
+      head.position.set(-0.28, 0, 0);
+      root.add(head);
+
+      // 4 & 5. Enormous 27-cm eyes (largest in the animal kingdom)
+      const eyeOuterGeo = new THREE.SphereGeometry(0.13, 10, 10);
+      const eyeL = new THREE.Mesh(eyeOuterGeo, secondaryMat);
+      eyeL.position.set(-0.26, 0.06, 0.31);
+      const pupilL = new THREE.Mesh(
+        new THREE.SphereGeometry(0.08, 8, 8),
+        darkEyeMat
+      );
+      pupilL.position.set(-0.26, 0.06, 0.37);
+      const eyeR = eyeL.clone();
+      eyeR.position.z = -0.31;
+      const pupilR = pupilL.clone();
+      pupilR.position.z = -0.37;
+      root.add(eyeL, eyeR, pupilL, pupilR);
+
+      // 6..13. Eight muscular arms trailing behind head
+      const armGeo = new THREE.CylinderGeometry(0.045, 0.012, 1.25, 6);
+      for (let i = 0; i < 8; i++) {
+        const angle = (i / 8) * Math.PI * 2;
+        const arm = new THREE.Mesh(
+          armGeo,
+          i % 2 === 0 ? primaryMat : secondaryMat
+        );
+        arm.rotation.z = Math.PI / 2 + Math.sin(angle) * 0.14;
+        arm.rotation.y = Math.cos(angle) * 0.14;
+        arm.position.set(
+          -1.02,
+          Math.sin(angle) * 0.22,
+          Math.cos(angle) * 0.22
+        );
+        root.add(arm);
+        animParts.push(arm);
+      }
+
+      // 14 & 15. Two hyper-elongated feeding tentacles with tentacular clubs
+      const tentGeo = new THREE.CylinderGeometry(0.025, 0.018, 2.15, 6);
+      const clubGeo = new THREE.SphereGeometry(0.09, 8, 8);
+      for (let t = 0; t < 2; t++) {
+        const sign = t === 0 ? 1 : -1;
+        const tentGroup = new THREE.Group();
+        const stalk = new THREE.Mesh(tentGeo, secondaryMat);
+        stalk.rotation.z = Math.PI / 2;
+        stalk.position.set(-1.45, sign * 0.08, sign * 0.28);
+        tentGroup.add(stalk);
+
+        const club = new THREE.Mesh(clubGeo, primaryMat);
+        club.scale.set(2.4, 0.7, 0.9);
+        club.position.set(-2.5, sign * 0.08, sign * 0.28);
+        tentGroup.add(club);
+
+        root.add(tentGroup);
+        animParts.push(tentGroup);
+      }
+      break;
+    }
+
     case 'vampire_squid': {
       // 1. Conical crimson mantle
       const mantle = new THREE.Mesh(
@@ -616,13 +786,31 @@ export function createMarineOrganismMesh(
 
   const animate = (elapsed: number, isSelected: boolean) => {
     const t = elapsed + phaseOffset;
-    // Gentle natural swimming trajectory
-    root.position.x = org.sceneOffsetX + Math.sin(t * 0.55) * 0.85;
-    root.position.z = org.sceneOffsetZ + Math.cos(t * 0.4) * 0.45;
-    root.rotation.y = Math.cos(t * 0.55) * 0.22;
-    root.rotation.z = Math.sin(t * 0.7) * 0.06;
+    // Smooth elliptical swimming trajectory with realistic yaw and pitch banking
+    const swimSpeed =
+      org.modelType === 'blue_whale' || org.modelType === 'sperm_whale'
+        ? 0.38
+        : org.modelType === 'shark' || org.modelType === 'dolphin' || org.modelType === 'tuna'
+        ? 0.72
+        : 0.52;
 
-    // Species-specific appendage / bell animation
+    const dx = Math.sin(t * swimSpeed) * 0.95;
+    const dz = Math.cos(t * swimSpeed * 0.75) * 0.45;
+    const dy = Math.sin(t * swimSpeed * 0.9) * 0.22;
+
+    root.position.x = org.sceneOffsetX + dx;
+    root.position.z = org.sceneOffsetZ + dz;
+    // Subtle vertical heave relative to characteristic depth anchor
+    if (root.userData.baseY !== undefined) {
+      root.position.y = root.userData.baseY + dy;
+    }
+
+    // Orient subtly into the swimming curve
+    root.rotation.y = Math.cos(t * swimSpeed) * 0.28;
+    root.rotation.z = Math.cos(t * swimSpeed * 0.9) * 0.08;
+    root.rotation.x = Math.sin(t * swimSpeed * 0.75) * 0.05;
+
+    // Species-specific appendage / bell / flipper animation
     for (let i = 0; i < animParts.length; i++) {
       const part = animParts[i];
       if (
@@ -630,10 +818,17 @@ export function createMarineOrganismMesh(
         org.modelType === 'deep_jellyfish' ||
         org.modelType === 'sea_cucumber'
       ) {
-        const pulse = 1 + Math.sin(t * 2.2 + i * 0.3) * 0.12;
+        const pulse = 1 + Math.sin(t * 2.4 + i * 0.3) * 0.14;
         part.scale.set(pulse, 1 / pulse, pulse);
+      } else if (org.modelType === 'sea_turtle') {
+        const flap = Math.sin(t * 2.6) * 0.38;
+        part.rotation.x = i === 0 ? flap : -flap;
+      } else if (org.modelType === 'blue_whale' || org.modelType === 'sperm_whale') {
+        // Cetacean horizontal flukes beat vertically
+        part.rotation.z = Math.sin(t * 2.2) * 0.22;
       } else {
-        part.rotation.y = Math.sin(t * 3.2 + i * 0.5) * 0.25;
+        // Sharks, teleost fish, and squid undulate laterally
+        part.rotation.y = Math.sin(t * 3.8 + i * 0.5) * 0.32;
       }
     }
 

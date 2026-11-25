@@ -5,6 +5,8 @@ import {
   TrenchData,
   OceanFactData,
   DiscoveryMilestone,
+  ExplorationMapSite,
+  ConservationTopic,
 } from '../types/ocean';
 
 export const MAX_OCEAN_DEPTH = 10935; // Challenger Deep illustrative benchmark (metres)
@@ -20,7 +22,7 @@ export const OCEAN_ZONES: OceanZoneData[] = [
     pressureRangeAtm: '1.0 – 20.9 atm',
     temperatureRangeC: '15.0 °C – 24.0 °C (illustrative surface mixed layer)',
     summary:
-      'Solar radiation penetrates this upper stratum, driving oceanic photosynthesis. Phytoplankton meadows sustain dense schools of pelagic fish, sea turtles, dolphins, and filter-feeding baleen whales.',
+      'Solar radiation penetrates this upper stratum, driving oceanic photosynthesis. Phytoplankton meadows sustain dense schools of pelagic fish, sea turtles, dolphins, sharks, and filter-feeding baleen whales.',
     environmentalTraits: [
       'Direct solar refraction and dynamic surface wave kinematics',
       'Active photosynthetic primary production',
@@ -41,12 +43,12 @@ export const OCEAN_ZONES: OceanZoneData[] = [
     pressureRangeAtm: '20.9 – 100.5 atm',
     temperatureRangeC: '4.5 °C – 15.0 °C (Permanent thermocline)',
     summary:
-      'Sunlight fades into a monochromatic blue-violet gloom. Home to the largest daily animal migration on Earth—the diel vertical migration—where billions of lanternfish and jellies ascend at night to feed.',
+      'Sunlight fades into a monochromatic blue-violet gloom. Home to the largest daily animal migration on Earth—the diel vertical migration—where billions of lanternfish, jellies, and cephalopods ascend at night to feed.',
     environmentalTraits: [
       'Rapid temperature drop across the permanent thermocline',
       'Continuous shower of organic marine snow from above',
       'Widespread ventral counter-illumination bioluminescence',
-      'Deep foraging dives by air-breathing sperm whales',
+      'Deep foraging dives by sperm whales hunting giant squid',
     ],
     colorHex: '#062642',
     accentHex: '#38bdf8',
@@ -67,7 +69,7 @@ export const OCEAN_ZONES: OceanZoneData[] = [
       'Complete absence of solar radiation',
       'Near-freezing water with slow thermohaline circulation',
       'Specialized ambush predators with expandable jaws and photophores',
-      'Soft-bodied gelatinous and neutral-buoyancy adaptations',
+      'Hydrothermal vent chemosynthetic oases along mid-ocean ridges',
     ],
     colorHex: '#041226',
     accentHex: '#06b6d4',
@@ -83,7 +85,7 @@ export const OCEAN_ZONES: OceanZoneData[] = [
     pressureRangeAtm: '399.0 – 598.1 atm',
     temperatureRangeC: '1.2 °C – 2.0 °C',
     summary:
-      'Covering over 70% of the ocean floor area, the abyssal plains consist of thick pelagic sediment blankets punctuated by basaltic seamounts. Scavengers like giant isopods and benthic holothurians thrive on sparse detritus and whale falls.',
+      'Covering over 70% of the ocean floor area, the abyssal plains consist of thick pelagic sediment blankets punctuated by basaltic seamounts and polymetallic nodule fields. Scavengers like giant isopods and benthic holothurians thrive on sparse detritus and whale falls.',
     environmentalTraits: [
       'Vast, sediment-draped abyssal seafloor plains',
       'Crushing hydrostatic pressure exceeding 400 atmospheres',
@@ -129,6 +131,8 @@ export const MARINE_ORGANISMS: MarineOrganismData[] = [
     characteristicDepth: 65,
     verifiedDepthRecord: 'Commonly 0–200 m foraging dives; documented occasional dives to ~315–500 m',
     habitat: 'Open pelagic surface waters across all major ocean basins',
+    diet: 'Stenophagous filter-feeder consuming almost exclusively euphausiids (krill; up to 3.6 tonnes daily)',
+    conservationStatus: 'Endangered (IUCN Red List — Population trend: Increasing)',
     shortDescription:
       'The largest animal ever known to have lived on Earth. Blue whales lunge-feed on dense euphausiid (krill) aggregations in the sunlit epipelagic layer, filtering tonnes of seawater through keratinous baleen plates.',
     adaptations: [
@@ -155,6 +159,8 @@ export const MARINE_ORGANISMS: MarineOrganismData[] = [
     characteristicDepth: 12,
     verifiedDepthRecord: 'Typically 0–50 m in coastal & pelagic zones; recorded dives to ~135 m',
     habitat: 'Tropical and subtropical photic waters, seagrass beds, and pelagic drift lines',
+    diet: 'Ontogenetic shift: omnivorous pelagic juveniles; primarily herbivorous adults grazing seagrass and marine algae',
+    conservationStatus: 'Endangered (IUCN Red List — Protected under CITES Appendix I)',
     shortDescription:
       'A migratory marine reptile with a hydrodynamic teardrop carapace and wing-like foreflippers. Adults graze on photic seagrass meadows and algae while crossing open-ocean currents during reproductive migrations.',
     adaptations: [
@@ -181,6 +187,8 @@ export const MARINE_ORGANISMS: MarineOrganismData[] = [
     characteristicDepth: 35,
     verifiedDepthRecord: 'Usually 0–150 m; offshore ecotypes documented diving > 450 m',
     habitat: 'Temperate and tropical epipelagic waters, continental shelves, and open seas',
+    diet: 'Epipelagic schooling teleost fishes, cephalopods (squid), and pelagic crustaceans',
+    conservationStatus: 'Least Concern (IUCN Red List — Regional inshore stocks vulnerable)',
     shortDescription:
       'Highly social odontocete cetaceans utilizing broadband biosonar clicks focused through a lipid-rich forehead melon to detect prey and navigate complex three-dimensional marine environments.',
     adaptations: [
@@ -198,6 +206,34 @@ export const MARINE_ORGANISMS: MarineOrganismData[] = [
     sceneOffsetZ: -1.5,
   },
   {
+    id: 'great-white-shark',
+    commonName: 'Great White Shark',
+    scientificName: 'Carcharodon carcharias',
+    zoneId: 'epipelagic',
+    illustrativeMinDepth: 0,
+    illustrativeMaxDepth: 200,
+    characteristicDepth: 50,
+    verifiedDepthRecord: 'Commonly 0–250 m coastal & pelagic foraging; satellite archival tags record dives to 1,200 m',
+    habitat: 'Temperate and subtropical epipelagic and mesopelagic waters worldwide',
+    diet: 'Pinnipeds (seals, sea lions), odontocete cetaceans, large teleost fishes, and elasmobranchs',
+    conservationStatus: 'Vulnerable (IUCN Red List — Population trend: Decreasing)',
+    shortDescription:
+      'An apex lamnid shark featuring countershaded slate-grey dorsal and stark white ventral coloration, electroreceptive ampullae of Lorenzini along its conical snout, and regional endothermy that warms swimming muscles above ambient seawater.',
+    adaptations: [
+      'Ampullae of Lorenzini detect microvolt electromagnetic fields generated by prey muscle contractions',
+      'Counter-current vascular heat exchangers maintain elevated core and retinal temperatures',
+      'Serrated triangular teeth arranged in conveyor-like replacement rows inside cartilaginous jaws',
+    ],
+    sizeEstimate: '4.5 – 6.0 m length',
+    bioluminescent: false,
+    modelType: 'shark',
+    primaryColor: '#475569',
+    secondaryColor: '#e2e8f0',
+    emissiveColor: '#000000',
+    sceneOffsetX: 1.5,
+    sceneOffsetZ: -2.2,
+  },
+  {
     id: 'tuna',
     commonName: 'Atlantic Bluefin Tuna',
     scientificName: 'Thunnus thynnus',
@@ -207,6 +243,8 @@ export const MARINE_ORGANISMS: MarineOrganismData[] = [
     characteristicDepth: 110,
     verifiedDepthRecord: 'Frequents 0–200 m photic zone; electronic tags record dives > 1,000 m',
     habitat: 'Pelagic epipelagic and upper mesopelagic waters of the North Atlantic',
+    diet: 'Pelagic schooling fishes (herring, mackerel, sand lance), squid, and pelagic crustaceans',
+    conservationStatus: 'Least Concern (IUCN Red List 2021 reassessment following quota recovery; Eastern/Western stocks managed)',
     shortDescription:
       'An apex teleost predator engineered for high-speed transoceanic pursuit. Unlike most fishes, bluefin tuna maintain elevated muscle and visceral temperatures through specialized vascular counter-current heat exchangers.',
     adaptations: [
@@ -220,7 +258,7 @@ export const MARINE_ORGANISMS: MarineOrganismData[] = [
     primaryColor: '#1e40af',
     secondaryColor: '#93c5fd',
     emissiveColor: '#000000',
-    sceneOffsetX: 1.4,
+    sceneOffsetX: -1.4,
     sceneOffsetZ: -2.0,
   },
 
@@ -235,6 +273,8 @@ export const MARINE_ORGANISMS: MarineOrganismData[] = [
     characteristicDepth: 420,
     verifiedDepthRecord: 'Daytime depth 300–850 m; migrates to 15–200 m at night',
     habitat: 'Mesopelagic water column across the North Atlantic and subpolar basins',
+    diet: 'Zooplankton including calanoid copepods, euphausiids, and amphipods during nocturnal ascent',
+    conservationStatus: 'Least Concern (IUCN Red List — High global mesopelagic biomass)',
     shortDescription:
       'Myctophid lanternfishes account for up to 65% of all deep-sea fish biomass. Rows of species-specific ventral photophores emit soft blue light that matches downwelling twilight, erasing their silhouette from predators below.',
     adaptations: [
@@ -261,6 +301,8 @@ export const MARINE_ORGANISMS: MarineOrganismData[] = [
     characteristicDepth: 620,
     verifiedDepthRecord: 'Common at 250–1,000 m; recorded down to 2,700 m in bathypelagic basins',
     habitat: 'Global mesopelagic and bathypelagic zones; avoids sunlit waters',
+    diet: 'Mesopelagic copepods, krill, chaetognaths (arrow worms), and small myctophid fishes',
+    conservationStatus: 'Not Evaluated (IUCN — Abundant cosmopolitan deep-pelagic scyphozoan)',
     shortDescription:
       'A coronate scyphozoan featuring a pointed crimson-brown bell and twelve muscular marginal tentacles held in splayed feeding postures. Its red porphyrin pigment blocks flashes of bioluminescent prey captured inside its gut.',
     adaptations: [
@@ -287,6 +329,8 @@ export const MARINE_ORGANISMS: MarineOrganismData[] = [
     characteristicDepth: 780,
     verifiedDepthRecord: 'Routine foraging dives 400–1,200 m; verified dives exceed 2,000 m',
     habitat: 'Deep mesopelagic canyons, continental slopes, and open ocean trenches worldwide',
+    diet: 'Meso- and bathypelagic cephalopods (giant squid, colossal squid, jumbo squid) and demersal fishes',
+    conservationStatus: 'Vulnerable (IUCN Red List — Population trend: Unknown)',
     shortDescription:
       'The largest toothed predator on Earth plunges from the sunlit surface into the cold twilight and midnight zones to hunt giant and colossal squid in pitch darkness using the most powerful biological sonar known.',
     adaptations: [
@@ -303,8 +347,64 @@ export const MARINE_ORGANISMS: MarineOrganismData[] = [
     sceneOffsetX: -1.4,
     sceneOffsetZ: -3.2,
   },
+  {
+    id: 'giant-squid',
+    commonName: 'Giant Squid',
+    scientificName: 'Architeuthis dux',
+    zoneId: 'mesopelagic',
+    illustrativeMinDepth: 400,
+    illustrativeMaxDepth: 1000,
+    characteristicDepth: 900,
+    verifiedDepthRecord: 'Inhabits 300–1,000+ m lower mesopelagic and upper bathypelagic slopes; filmed alive at 630–900 m off Ogasawara Islands',
+    habitat: 'Continental slopes, island margins, and deep mesopelagic/bathypelagic canyons worldwide',
+    diet: 'Deep-sea teleost fishes (grenadiers, hoki) and pelagic cephalopods captured with serrated tentacular clubs',
+    conservationStatus: 'Least Concern (IUCN Red List — Wide global distribution in deep basins)',
+    shortDescription:
+      'One of the world’s largest invertebrates, possessing eyes up to 27 centimetres in diameter—the largest in the animal kingdom—evolved to detect faint bioluminescent wakes of approaching sperm whales in the twilight and midnight depths.',
+    adaptations: [
+      '27-cm eyes maximize photon capture to spot bioluminescent disturbances from hunting sperm whales',
+      'Two muscular feeding tentacles extend over twice body length with chitin-ringed suction cups',
+      'Ammonium-chloride ions in muscle tissues provide neutral buoyancy without a gas chamber',
+    ],
+    sizeEstimate: '10 – 13 m total length',
+    bioluminescent: false,
+    modelType: 'giant_squid',
+    primaryColor: '#9f1239',
+    secondaryColor: '#fda4af',
+    emissiveColor: '#38bdf8',
+    sceneOffsetX: 1.45,
+    sceneOffsetZ: -2.1,
+  },
 
   // MIDNIGHT (Bathypelagic: 1,000 - 4,000 m)
+  {
+    id: 'greenland-shark',
+    commonName: 'Greenland Sleeper Shark',
+    scientificName: 'Somniosus microcephalus',
+    zoneId: 'bathypelagic',
+    illustrativeMinDepth: 1000,
+    illustrativeMaxDepth: 2200,
+    characteristicDepth: 1320,
+    verifiedDepthRecord: 'Inhabits 0–2,200 m cold waters; confirmed submersible observations down to 2,200 m',
+    habitat: 'Cold bathypelagic slopes and deep basins of the North Atlantic and Arctic',
+    diet: 'Demersal fishes (halibut, skates), cephalopods, seals, and benthic whale-fall carrion',
+    conservationStatus: 'Vulnerable (IUCN Red List — Extreme longevity & late maturity >150 years)',
+    shortDescription:
+      'The longest-lived known vertebrate on Earth, with radiocarbon eye-lens dating estimating lifespans of 250 to 400+ years. It cruises slowly through near-freezing bathypelagic darkness using high concentrations of urea and TMAO to stabilize tissues.',
+    adaptations: [
+      'Extreme metabolic slowness and cold-adapted enzymes enable century-spanning longevity',
+      'Tissues rich in trimethylamine N-oxide (TMAO) provide buoyancy and hydrostatic stability',
+      'Keen olfactory bulbs guide scavenging and stealth predation in total aphotic darkness',
+    ],
+    sizeEstimate: '4.0 – 5.5 m length',
+    bioluminescent: false,
+    modelType: 'shark',
+    primaryColor: '#334155',
+    secondaryColor: '#64748b',
+    emissiveColor: '#000000',
+    sceneOffsetX: 1.4,
+    sceneOffsetZ: -2.1,
+  },
   {
     id: 'anglerfish',
     commonName: 'Humpback Anglerfish',
@@ -315,6 +415,8 @@ export const MARINE_ORGANISMS: MarineOrganismData[] = [
     characteristicDepth: 1650,
     verifiedDepthRecord: 'Verified mesopelagic/bathypelagic captures from ~500 m to 2,100 m (larvae shallower)',
     habitat: 'Aphotic bathypelagic water column of tropical and temperate oceans',
+    diet: 'Midwater bristlemouths, lanternfishes, deep-sea shrimps, and cephalopods lured in darkness',
+    conservationStatus: 'Least Concern (IUCN Red List — Widespread bathypelagic distribution)',
     shortDescription:
       'An iconic ceratioid ambush predator with a globular dark body, distensible stomach, and a modified dorsal spine (illicium) tipped with a glowing esca packed with symbiotic Vibrio bacteria.',
     adaptations: [
@@ -341,6 +443,8 @@ export const MARINE_ORGANISMS: MarineOrganismData[] = [
     characteristicDepth: 2250,
     verifiedDepthRecord: 'Typically 600–1,500 m in Oxygen Minimum Zones; recorded to ~3,000 m',
     habitat: 'Oxygen minimum zones of the lower mesopelagic and bathypelagic layers',
+    diet: 'Detritivore consuming marine snow (sinking fecal pellets, crustacean molts, and gelatinous remains)',
+    conservationStatus: 'Not Evaluated (IUCN — Specialized Oxygen Minimum Zone relic species)',
     shortDescription:
       'Neither a true squid nor an octopus, this phylogenetic relic belongs to its own order. Instead of hunting live prey, it unfurls two retractile velar filaments to harvest sinking marine snow detritus.',
     adaptations: [
@@ -367,6 +471,8 @@ export const MARINE_ORGANISMS: MarineOrganismData[] = [
     characteristicDepth: 3150,
     verifiedDepthRecord: 'Verified range ~1,000–4,000 m across cosmopolitan deep ocean basins',
     habitat: 'Aphotic bathypelagic waters worldwide',
+    diet: 'Deep-sea copepods, amphipods, decapod shrimps, and gelatinous zooplankton',
+    conservationStatus: 'Not Evaluated (IUCN — Cosmopolitan bathypelagic coronate medusa)',
     shortDescription:
       'Famous for its rotating pinwheel display of blue bioluminescence—nicknamed the "burglar alarm" hypothesis—which illuminates an attacking predator to attract even larger secondary predators.',
     adaptations: [
@@ -393,10 +499,12 @@ export const MARINE_ORGANISMS: MarineOrganismData[] = [
     illustrativeMinDepth: 4050,
     illustrativeMaxDepth: 5200,
     characteristicDepth: 4450,
-    verifiedDepthRecord: 'Bathynomus genus spans bathyal to abyssal benthic slopes (170–2,500+ m; related B. kensleyi/abyssal isopods deeper); placed at 4,050–5,200 m as an illustrative benthic scavenger representative',
+    verifiedDepthRecord: 'Bathynomus genus spans bathyal to abyssal benthic slopes (170–2,500+ m; related abyssal isopods deeper); placed at 4,050–5,200 m as an illustrative benthic scavenger representative',
     habitat: 'Muddy and clay benthic slopes and abyssal seafloors',
+    diet: 'Benthic scavenger feeding on sunken whale falls, fish carcasses, squid remains, and slow sponges',
+    conservationStatus: 'Not Evaluated (IUCN — Sparse benthic population density)',
     shortDescription:
-      'A classic examplar of deep-sea gigantism, related to terrestrial woodlice. Giant isopods patrol the cold benthic mud with compound eyes containing nearly 4,000 facets, scavenging sunken whale falls and cephalopod carcasses.',
+      'A classic exemplar of deep-sea gigantism, related to terrestrial woodlice. Giant isopods patrol the cold benthic mud with compound eyes containing nearly 4,000 facets, scavenging sunken whale falls and cephalopod carcasses.',
     adaptations: [
       'Fourteen articulated pereiopods and overlapping calcified tergite armor plates',
       'Can survive for years without feeding by storing lipids in a massive hepatopancreas',
@@ -421,6 +529,8 @@ export const MARINE_ORGANISMS: MarineOrganismData[] = [
     characteristicDepth: 5000,
     verifiedDepthRecord: 'Verified benthic and benthopelagic range from 500 m to > 5,700 m',
     habitat: 'Abyssal seafloor sediments and the benthopelagic boundary layer above the bottom',
+    diet: 'Benthic deposit-feeder ingesting organic-rich surface phytodetritus and abyssal sediment ooze',
+    conservationStatus: 'Not Evaluated (IUCN — Sensitive to deep-sea benthic sediment plumes)',
     shortDescription:
       'A translucent crimson holothurian equipped with an anterior webbed veil of fused tube feet. It lands on the abyssal ooze to rapidly ingest nutrient-bearing sediment before undulating back into the water column.',
     adaptations: [
@@ -447,6 +557,8 @@ export const MARINE_ORGANISMS: MarineOrganismData[] = [
     characteristicDepth: 5600,
     verifiedDepthRecord: 'Observed on abyssal spreading ridges, seamounts, and plains up to ~4,000–5,500 m (illustrative abyssal floor range)',
     habitat: 'Abyssal basalt outcrops, hydrothermal vent peripheries, and deep sediment plains',
+    diet: 'Chemosynthetic bacterial mats, hydrothermal vent tube worms, benthic molluscs, and organic detritus',
+    conservationStatus: 'Not Evaluated (IUCN — Endemic to deep northeast Pacific ridges and abyssal plains)',
     shortDescription:
       'Long-legged majoid decapod crustaceans that stride slowly across abyssal sediment plains and volcanic basalt pillows, using elongated chelipeds to pick bacterial mats and benthic invertebrates from rock crevices.',
     adaptations: [
@@ -475,6 +587,8 @@ export const MARINE_ORGANISMS: MarineOrganismData[] = [
     characteristicDepth: 7500,
     verifiedDepthRecord: 'Captured at 6,898–7,966 m; related Pseudoliparis filmed at 8,336 m (deepest fish limit ~8,200–8,400 m)',
     habitat: 'Hadal subduction trench slopes of the Mariana and Izu-Ogasawara Trenches',
+    diet: 'Hadal amphipods (Hirondellea gigas), decapod shrimps, and polychaete worms aspirated via suction feeding',
+    conservationStatus: 'Not Evaluated (IUCN — Endemic hadal trench top vertebrate predator)',
     shortDescription:
       'The deepest-living vertebrate lineage on Earth. Translucent and scale-free, hadal snailfish lack a gas-filled swim bladder (which would implode) and reach their physiological osmotic ceiling around 8,336 metres.',
     adaptations: [
@@ -501,6 +615,8 @@ export const MARINE_ORGANISMS: MarineOrganismData[] = [
     characteristicDepth: 10200,
     verifiedDepthRecord: 'Verified across lower abyssal to full hadal trench floors (5,000–10,900 m)',
     habitat: 'Deepest hadal trench axes, including the Kermadec and Mariana Trenches',
+    diet: 'Opportunistic hadal carrion scavenger, sunken terrestrial plant wood debris, and pelagic marine snow',
+    conservationStatus: 'Not Evaluated (IUCN — Documented across Pacific and Atlantic hadal basins)',
     shortDescription:
       'Growing over twenty times longer than typical shallow-water amphipods, these pale crustaceans thrive all the way to the 10,935-metre floor of the Challenger Deep, where vertebrates can no longer osmoregulate.',
     adaptations: [
@@ -526,6 +642,7 @@ export const DEPTH_LANDMARKS: DepthLandmark[] = [
     title: 'Ocean Surface (Mean Sea Level)',
     category: 'zone',
     description: '1.0 atm standard atmospheric pressure; full solar irradiance spectrum.',
+    verifiedNote: 'Verified physical baseline (101.325 kPa)',
   },
   {
     id: 'scuba-limit',
@@ -533,6 +650,15 @@ export const DEPTH_LANDMARKS: DepthLandmark[] = [
     title: 'Recreational Scuba Diving Limit',
     category: 'exploration',
     description: 'Standard recreational no-decompression limit (~5.0 atm ambient pressure).',
+    verifiedNote: 'PADI / CMAS recreational certification threshold',
+  },
+  {
+    id: 'britannic-wreck',
+    depth: 120,
+    title: 'HMHS Britannic Shipwreck',
+    category: 'shipwreck',
+    description: 'Sister ship to the Titanic resting on the floor of the Kea Channel in the Aegean Sea.',
+    verifiedNote: 'Verified wreck depth: 120 m (sank 1916)',
   },
   {
     id: 'epipelagic-boundary',
@@ -540,20 +666,39 @@ export const DEPTH_LANDMARKS: DepthLandmark[] = [
     title: 'Base of the Epipelagic (Photic) Zone',
     category: 'zone',
     description: 'Only ~1% of surface sunlight remains; photosynthesis ceases below this horizon.',
+    verifiedNote: 'Standard oceanographic photic/dysphotic boundary',
   },
   {
     id: 'deepest-scuba',
     depth: 332,
-    title: 'Deepest Technical Scuba Dive',
+    title: 'Deepest Technical Scuba Dive Record',
     category: 'exploration',
-    description: 'Set by Ahmed Gabr in the Red Sea (2014) at ~34.4 atm hydrostatic pressure.',
+    description: 'Set by Ahmed Gabr in the Red Sea (2014) at ~34.1 atm hydrostatic pressure.',
+    verifiedNote: 'Verified Guinness World Record (332.35 m)',
+  },
+  {
+    id: 'lost-city-vents',
+    depth: 800,
+    title: 'Lost City Alkaline Hydrothermal Field',
+    category: 'hydrothermal',
+    description: '60-metre carbonate chimneys venting serpentinized alkaline fluids on the Atlantis Massif.',
+    verifiedNote: 'Discovered 2000 at 750–900 m (Mid-Atlantic Ridge)',
   },
   {
     id: 'mesopelagic-boundary',
     depth: 1000,
     title: 'Onset of the Bathypelagic (Midnight) Zone',
     category: 'zone',
-    description: 'Last detectable solar photons vanish; complete aphotic darkness begins (~100.5 atm).',
+    description: 'Last detectable solar photons vanish; complete aphotic darkness begins (~100.4 atm).',
+    verifiedNote: 'Aphotic threshold across clear ocean water',
+  },
+  {
+    id: 'galapagos-hydrothermal-vents',
+    depth: 2500,
+    title: 'Galápagos Black Smoker Hydrothermal Vents',
+    category: 'hydrothermal',
+    description: '350 °C mineral-rich geothermal chimneys sustaining giant Riftia tube worms via chemosynthesis.',
+    verifiedNote: 'Discovered 1977 by DSV Alvin (~2,500 m depth)',
   },
   {
     id: 'beaked-whale-record',
@@ -561,13 +706,15 @@ export const DEPTH_LANDMARKS: DepthLandmark[] = [
     title: "Cuvier's Beaked Whale Dive Record",
     category: 'biology',
     description: 'Deepest verified dive by any air-breathing marine mammal (Ziphius cavirostris).',
+    verifiedNote: 'Cascadia Research satellite tag record (2014)',
   },
   {
     id: 'titanic-wreck',
     depth: 3800,
     title: 'RMS Titanic Resting Depth',
-    category: 'exploration',
+    category: 'shipwreck',
     description: 'Lies on the continental rise south of Newfoundland under ~379 atm of pressure.',
+    verifiedNote: 'Verified wreck depth ~3,800 m (discovered 1985)',
   },
   {
     id: 'abyssal-boundary',
@@ -575,6 +722,15 @@ export const DEPTH_LANDMARKS: DepthLandmark[] = [
     title: 'Abyssopelagic Plain Threshold',
     category: 'zone',
     description: 'Transition to the expansive abyssal plains that cover most of Earth’s seabed.',
+    verifiedNote: 'Standard abyssal pelagic zone boundary',
+  },
+  {
+    id: 'bismarck-wreck',
+    depth: 4790,
+    title: 'Battleship Bismarck Wreck Horizon',
+    category: 'shipwreck',
+    description: 'Rests upright on an extinct underwater volcanic slope in the North Atlantic abyssal plain.',
+    verifiedNote: 'Discovered 1989 by Robert Ballard at 4,791 m',
   },
   {
     id: 'hadal-boundary',
@@ -582,6 +738,15 @@ export const DEPTH_LANDMARKS: DepthLandmark[] = [
     title: 'Hadal Subduction Trench Threshold',
     category: 'zone',
     description: 'Seafloor drops into narrow tectonic subduction trenches (~598 atm).',
+    verifiedNote: 'Standard hadal zone boundary (6,000 m)',
+  },
+  {
+    id: 'uss-johnston-wreck',
+    depth: 6469,
+    title: 'USS Johnston (DD-557) — Deepest Surveyed Shipwreck',
+    category: 'shipwreck',
+    description: 'Fletcher-class destroyer resting on the slope of the Philippine Trench; deepest wreck ever filmed.',
+    verifiedNote: 'Surveyed 2021 by DSV Limiting Factor at 6,469 m',
   },
   {
     id: 'deepest-fish',
@@ -589,6 +754,7 @@ export const DEPTH_LANDMARKS: DepthLandmark[] = [
     title: 'Biochemical Depth Limit of Vertebrate Fish',
     category: 'biology',
     description: 'Pseudoliparis snailfish filmed in the Izu-Ogasawara Trench (2023) near the TMAO osmotic ceiling.',
+    verifiedNote: 'Verified baited-lander video record (8,336 m, 2023)',
   },
   {
     id: 'everest-inverted',
@@ -596,6 +762,7 @@ export const DEPTH_LANDMARKS: DepthLandmark[] = [
     title: 'Mount Everest (Inverted Scale Comparison)',
     category: 'geology',
     description: 'If placed on the Challenger Deep floor, Everest’s summit would still lie > 2,080 m underwater.',
+    verifiedNote: 'Official 2020 survey elevation: 8,848.86 m',
   },
   {
     id: 'challenger-deep',
@@ -603,6 +770,7 @@ export const DEPTH_LANDMARKS: DepthLandmark[] = [
     title: 'Challenger Deep (Mariana Trench Floor)',
     category: 'geology',
     description: 'Deepest surveyed point in Earth’s oceans (~1,089 atm hydrostatic pressure).',
+    verifiedNote: 'NOAA / multibeam bathymetric synthesis (~10,925–10,935 m)',
   },
 ];
 
@@ -694,9 +862,9 @@ export const OCEAN_FACTS: OceanFactData[] = [
     dataPoints: [
       { label: 'Sea Level (0 m)', depthM: 0, value: '1.0 atm (101.3 kPa)' },
       { label: 'Photic Limit (200 m)', depthM: 200, value: '20.9 atm (2.12 MPa)' },
-      { label: 'Midnight Onset (1,000 m)', depthM: 1000, value: '100.5 atm (10.18 MPa)' },
-      { label: 'Abyssal Plain (4,000 m)', depthM: 4000, value: '399.0 atm (40.43 MPa)' },
-      { label: 'Challenger Deep (10,935 m)', depthM: 10935, value: '1,089.2 atm (110.36 MPa)' },
+      { label: 'Midnight Onset (1,000 m)', depthM: 1000, value: '100.4 atm (10.18 MPa)' },
+      { label: 'Abyssal Plain (4,000 m)', depthM: 4000, value: '398.6 atm (40.43 MPa)' },
+      { label: 'Challenger Deep (10,935 m)', depthM: 10935, value: '1,087.9 atm (110.36 MPa)' },
     ],
   },
   {
@@ -803,5 +971,179 @@ export const DISCOVERY_MILESTONES: DiscoveryMilestone[] = [
       'Roughly 74% of Earth’s seafloor remains unmapped at high direct-sonar resolution (<100 m grid). Recent abyssal lander chambers in the Clarion-Clipperton Zone also detected unexpected electrochemical "dark oxygen" production on polymetallic nodules.',
     scientificImpact:
       'Reveals how abyssal mineral geochemistry and deep microbial ecosystems regulate planetary biogeochemical cycles.',
+  },
+];
+
+export const EXPLORATION_MAP_SITES: ExplorationMapSite[] = [
+  {
+    id: 'site-challenger-deep',
+    name: 'Challenger Deep (Mariana Trench)',
+    category: 'trench',
+    oceanBasin: 'Western North Pacific',
+    coordinates: '11°21′N, 142°12′E',
+    mapX: 815,
+    mapY: 215,
+    depthMetres: 10935,
+    yearOrEra: '1960 / 2012 / 2019',
+    summary:
+      'Earth’s deepest known bathymetric point where the Pacific Plate subducts beneath the Mariana Plate. Visited by Bathyscaphe Trieste, Deepsea Challenger, and DSV Limiting Factor.',
+    verifiedDataNote: 'Verified multibeam & CTD pressure depth: ~10,925–10,935 m',
+  },
+  {
+    id: 'site-titanic',
+    name: 'RMS Titanic Wreck Site',
+    category: 'shipwreck',
+    oceanBasin: 'North Atlantic Ocean',
+    coordinates: '41°43′N, 49°56′W',
+    mapX: 358,
+    mapY: 132,
+    depthMetres: 3800,
+    yearOrEra: 'Sank 1912 · Located 1985',
+    summary:
+      'Resting in two main sections on the North Atlantic continental rise south of Newfoundland. Colonized by iron-oxidizing Halomonas titanicae bacteria forming "rusticles".',
+    verifiedDataNote: 'Verified wreck depth: ~3,800 m (~379 atm hydrostatic pressure)',
+  },
+  {
+    id: 'site-uss-johnston',
+    name: 'USS Johnston (DD-557) — Deepest Shipwreck',
+    category: 'shipwreck',
+    oceanBasin: 'Philippine Sea (Western Pacific)',
+    coordinates: '11°47′N, 126°09′E',
+    mapX: 778,
+    mapY: 218,
+    depthMetres: 6469,
+    yearOrEra: 'Sank 1944 · Surveyed 2021',
+    summary:
+      'Sunk during the Battle off Samar and surveyed inside the hadal slope of the Philippine Trench. Holds the verified record as the deepest shipwreck ever located and filmed.',
+    verifiedDataNote: 'Verified submersible depth survey: 6,469 m (Caladan Oceanic, 2021)',
+  },
+  {
+    id: 'site-galapagos-vents',
+    name: 'Rose Garden Hydrothermal Vents',
+    category: 'hydrothermal',
+    oceanBasin: 'Eastern Equatorial Pacific',
+    coordinates: '00°48′N, 86°13′W',
+    mapX: 256,
+    mapY: 248,
+    depthMetres: 2500,
+    yearOrEra: 'Discovered 1977 (DSV Alvin)',
+    summary:
+      'The historic Galápagos Rift spreading ridge site where scientists first discovered deep-sea hydrothermal vents and chemosynthetic Riftia pachyptila giant tube worm ecosystems.',
+    verifiedDataNote: 'Verified spreading ridge depth: ~2,450–2,550 m',
+  },
+  {
+    id: 'site-lost-city',
+    name: 'Lost City Alkaline Hydrothermal Field',
+    category: 'hydrothermal',
+    oceanBasin: 'Mid-Atlantic Ridge (Atlantis Massif)',
+    coordinates: '30°07′N, 42°07′W',
+    mapX: 382,
+    mapY: 165,
+    depthMetres: 800,
+    yearOrEra: 'Discovered 2000',
+    summary:
+      'Unlike volcanic black smokers, Lost City is driven by exothermic serpentinization reactions between mantle rock and seawater, building 60-metre white calcium carbonate towers.',
+    verifiedDataNote: 'Verified summit depth: 750–900 m along the Mid-Atlantic Ridge',
+  },
+  {
+    id: 'site-horizon-deep',
+    name: 'Horizon Deep (Tonga Trench)',
+    category: 'trench',
+    oceanBasin: 'Southwestern Pacific Ocean',
+    coordinates: '23°15′S, 174°43′W',
+    mapX: 912,
+    mapY: 325,
+    depthMetres: 10800,
+    yearOrEra: 'Surveyed 2019',
+    summary:
+      'The deepest point in the Southern Hemisphere and second-deepest point on Earth, situated along the fastest-converging tectonic plate boundary on the planet.',
+    verifiedDataNote: 'Verified depth: ~10,800 m (~1,075 atm)',
+  },
+  {
+    id: 'site-puerto-rico-trench',
+    name: 'Milwaukee Deep (Puerto Rico Trench)',
+    category: 'trench',
+    oceanBasin: 'Atlantic / Caribbean Boundary',
+    coordinates: '19°42′N, 66°27′W',
+    mapX: 315,
+    mapY: 196,
+    depthMetres: 8376,
+    yearOrEra: 'First solo dive 2018',
+    summary:
+      'The deepest point in the Atlantic Ocean, lying along a complex oblique subduction and transform fault boundary north of Puerto Rico.',
+    verifiedDataNote: 'Verified multibeam & submersible depth: 8,376 m',
+  },
+  {
+    id: 'site-izu-snailfish',
+    name: 'Izu-Ogasawara Trench Fish Limit Site',
+    category: 'expedition',
+    oceanBasin: 'Northwest Pacific (South of Japan)',
+    coordinates: '29°12′N, 142°48′E',
+    mapX: 818,
+    mapY: 168,
+    depthMetres: 8336,
+    yearOrEra: 'Record set 2023',
+    summary:
+      'Location where an autonomous baited lander filmed a juvenile Pseudoliparis snailfish at 8,336 m—the deepest verified observation of any living vertebrate fish.',
+    verifiedDataNote: 'Verified lander CTD depth: 8,336 m (Minderoo-UWA, 2023)',
+  },
+];
+
+export const CONSERVATION_TOPICS: ConservationTopic[] = [
+  {
+    id: 'seabed-mapping',
+    title: 'High-Resolution Bathymetry & Seabed 2030',
+    category: 'Research Technology',
+    targetDepthMetres: 4000,
+    keyMetric: '~26%',
+    metricLabel: 'of Earth’s seafloor mapped by direct multibeam sonar (as of 2024)',
+    summary:
+      'While satellite radar altimetry provides coarse (~5 km) gravity-derived maps of the ocean floor, over 74% of the seabed has never been surveyed at high acoustic resolution (<100 m grid).',
+    scientificContext:
+      'Modern deep-water multibeam echosounders and autonomous surface vehicles are systematically revealing tens of thousands of previously unknown seamounts, fracture zones, and benthic habitats.',
+    actionableInsight:
+      'Inspect the 4,000 m Abyssopelagic Plain threshold in the 3D explorer to see where continental slopes transition into vast unmapped abyssal basins.',
+  },
+  {
+    id: 'abyssal-nodules',
+    title: 'Abyssal Polymetallic Nodules & Benthic Fragility',
+    category: 'Benthic Conservation',
+    targetDepthMetres: 5000,
+    keyMetric: '1–10 mm',
+    metricLabel: 'nodule growth rate per million years on abyssal plains',
+    summary:
+      'Potato-sized polymetallic nodules on 4,000–5,500 m abyssal plains take millions of years to precipitate around shark teeth or whale ear bones, serving as the only hard substrate for deep sponges and octocorals.',
+    scientificContext:
+      'Long-term disturbance studies (such as the 1989 DISCOL experiment in the Peru Basin) show that benthic tracks and sediment resuspension plumes persist for decades because abyssal sedimentation rates are less than 1 cm per thousand years.',
+    actionableInsight:
+      'Dive to 5,000 m in the 3D explorer to observe the benthic habitat of the Pelagic Sea Cucumber and Abyssal Spider Crab.',
+  },
+  {
+    id: 'oxygen-minimum-zones',
+    title: 'Deoxygenation & Deep Carbon Sequestration',
+    category: 'Climate & Chemistry',
+    targetDepthMetres: 420,
+    keyMetric: '~10 Gt',
+    metricLabel: 'of carbon transported annually by the biological pump',
+    summary:
+      'Every night, billions of mesopelagic lanternfish, squid, and crustaceans migrate from 300–850 m up to the surface to feed, returning before dawn and sequestering surface carbon into the deep ocean.',
+    scientificContext:
+      'Warming surface stratification reduces vertical oxygen mixing, expanding midwater Oxygen Minimum Zones (200–1,500 m) inhabited by specialized species like the Vampire Squid while compressing habitats for active pelagic predators.',
+    actionableInsight:
+      'Jump to 420 m in the 3D explorer to inspect the Mesopelagic Twilight Zone and its migrating Glacier Lanternfish schools.',
+  },
+  {
+    id: 'high-seas-treaty',
+    title: 'High Seas Biodiversity Treaty (BBNJ) & Hadal Protection',
+    category: 'Global Governance',
+    targetDepthMetres: 7500,
+    keyMetric: '64%',
+    metricLabel: 'of the global ocean lies beyond national Exclusive Economic Zones',
+    summary:
+      'The UN High Seas Treaty (Biodiversity Beyond National Jurisdiction) establishes the legal framework to designate Marine Protected Areas across international open-ocean water columns, seamounts, and hydrothermal vents.',
+    scientificContext:
+      'Even in the deepest hadal trenches (6,000–10,935 m), researchers have documented microplastics and persistent organic pollutants accumulating inside scavenging amphipods, demonstrating that surface stewardship directly affects the deepest trenches.',
+    actionableInsight:
+      'Explore 7,500 m in the 3D explorer to examine the Mariana Hadal Snailfish habitat inside the subduction trench corridor.',
   },
 ];
