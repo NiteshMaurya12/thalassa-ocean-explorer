@@ -1,0 +1,6 @@
+{
+  "name": "THALASSA — Deep Ocean Explorer",
+  "description": "An interactive 3D journey from the sunlit ocean surface to the 10,935-metre Challenger Deep in the Mariana Trench.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
