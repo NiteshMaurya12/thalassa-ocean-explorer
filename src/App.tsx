@@ -140,15 +140,14 @@ export default function App() {
   const handleChangeDepth = useCallback((newDepth: number) => {
     const clamped = clampDepth(newDepth);
     setCurrentDepth(clamped);
-    if (clamped > 0) {
-      setIsDivingStarted(true);
-    }
+    setIsDivingStarted(clamped > 0);
   }, []);
 
   const handleJumpToDepthFromSection = useCallback((targetDepth: number) => {
+    const clamped = clampDepth(targetDepth);
     setIsAutoDescending(false);
-    setIsDivingStarted(true);
-    setCurrentDepth(clampDepth(targetDepth));
+    setIsDivingStarted(clamped > 0);
+    setCurrentDepth(clamped);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 

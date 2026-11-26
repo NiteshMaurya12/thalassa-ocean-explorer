@@ -29,86 +29,81 @@ export const OceanHero: React.FC<OceanHeroProps> = ({
     const ctx = gsap.context(() => {
       gsap.fromTo(
         titleRef.current,
-        { opacity: 0, y: 18 },
-        { opacity: 1, y: 0, duration: 0.85, ease: 'power3.out', delay: 0.1 }
+        { opacity: 0, y: 12 },
+        { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', delay: 0.08 }
       );
       gsap.fromTo(
         subtitleRef.current,
-        { opacity: 0, y: 14 },
-        { opacity: 1, y: 0, duration: 0.75, ease: 'power3.out', delay: 0.22 }
+        { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: 0.65, ease: 'power3.out', delay: 0.18 }
       );
       gsap.fromTo(
         actionsRef.current,
-        { opacity: 0, y: 12 },
-        { opacity: 1, y: 0, duration: 0.75, ease: 'power3.out', delay: 0.34 }
+        { opacity: 0, y: 8 },
+        { opacity: 1, y: 0, duration: 0.65, ease: 'power3.out', delay: 0.28 }
       );
     }, heroContainerRef);
 
     return () => ctx.revert();
   }, []);
 
-  // Once the user starts diving or descends below 25m, smoothly fade the hero overlay out
-  // so the 3D underwater viewport is completely unobstructed
-  const isHidden = isDivingStarted || currentDepth > 25;
+  // Smoothly fade out and hide the hero card as soon as user clicks Start Exploring or descends below 0m.
+  // Reappears smoothly when user returns to surface (0m and not actively diving).
+  const isHidden = isDivingStarted || currentDepth > 5;
 
   return (
     <div
       ref={heroContainerRef}
-      className={`pointer-events-none absolute inset-x-0 top-16 z-20 flex flex-col items-center justify-center px-4 pt-3 pb-4 transition-opacity duration-500 ${
-        isHidden ? 'opacity-0 invisible' : 'opacity-100 visible'
+      aria-hidden={isHidden}
+      className={`pointer-events-none absolute inset-x-0 top-14 sm:top-16 z-20 flex flex-col items-center justify-center px-4 pt-2 transition-all duration-500 ease-out ${
+        isHidden
+          ? 'opacity-0 -translate-y-2 scale-95 invisible'
+          : 'opacity-100 translate-y-0 scale-100 visible'
       }`}
     >
-      <div className="pointer-events-auto max-w-md sm:max-w-lg lg:translate-x-24 mx-auto text-center bg-[#030b18]/50 border border-cyan-400/25 rounded-xl px-5 py-4 sm:px-7 sm:py-5 shadow-2xl">
-        <p className="text-[11px] font-mono-tabular tracking-[0.22em] text-cyan-300 uppercase mb-2">
-          THALASSA · DESCEND INTO THE UNKNOWN
+      <div
+        data-testid="hero-surface-card"
+        className="pointer-events-auto w-full max-w-[310px] sm:max-w-[350px] mx-auto text-center bg-[#030b18]/38 border border-cyan-400/20 rounded-xl px-4 py-3 sm:px-5 sm:py-3.5 shadow-lg"
+      >
+        <p className="text-[9px] font-mono-tabular tracking-[0.2em] text-cyan-300/90 uppercase mb-1">
+          THALASSA · 3D OCEAN EXPEDITION
         </p>
 
         <h1
           ref={titleRef}
-          className="font-display text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-white leading-[1.12] mb-2.5 drop-shadow"
+          className="font-display text-lg sm:text-xl md:text-2xl font-bold tracking-tight text-white leading-snug mb-1.5 drop-shadow"
         >
           THE OCEAN IS DEEPER THAN YOU THINK.
         </h1>
 
         <p
           ref={subtitleRef}
-          className="text-xs sm:text-sm text-slate-200/95 max-w-md mx-auto leading-relaxed mb-4"
+          className="text-[11px] sm:text-xs text-slate-200/90 max-w-[270px] mx-auto leading-normal mb-3"
         >
-          An interactive 3D scientific expedition from the sunlit ocean surface
-          to the 10,935-metre floor of the Challenger Deep.
+          Descend from the sunlit surface to 10,935 m in real-time 3D.
         </p>
 
         <div
           ref={actionsRef}
-          className="flex flex-wrap items-center justify-center gap-3"
+          className="flex items-center justify-center gap-2"
         >
           <button
             type="button"
             onClick={onStartDiving}
-            className="inline-flex items-center gap-2 px-4 py-2 text-xs sm:text-sm font-semibold text-slate-950 bg-cyan-400 rounded-lg hover:bg-cyan-300 transition-colors whitespace-nowrap shrink-0 cursor-pointer shadow-md"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold text-slate-950 bg-cyan-400 rounded-md hover:bg-cyan-300 transition-colors whitespace-nowrap shrink-0 cursor-pointer shadow-sm"
           >
             <ArrowDown className="w-3.5 h-3.5" />
-            <span>START EXPLORING</span>
+            <span>Start Exploring</span>
           </button>
 
           <button
             type="button"
             onClick={onExploreSections}
-            className="inline-flex items-center gap-2 px-4 py-2 text-xs sm:text-sm font-semibold text-slate-100 bg-[#051326]/75 border border-cyan-500/35 rounded-lg hover:border-cyan-400 hover:bg-[#071a33]/90 hover:text-white transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-100 bg-[#051326]/55 border border-cyan-500/25 rounded-md hover:border-cyan-400/60 hover:bg-[#071a33]/80 hover:text-white transition-colors whitespace-nowrap shrink-0 cursor-pointer"
           >
             <Compass className="w-3.5 h-3.5 text-cyan-400" />
-            <span>EXPLORE THE OCEAN</span>
+            <span>Atlas</span>
           </button>
-        </div>
-
-        <div className="mt-3.5 pt-2.5 border-t border-cyan-500/20 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[11px] text-slate-300/90">
-          <span>0 m Surface Column</span>
-          <span aria-hidden="true">·</span>
-          <span>5 Bathymetric Zones</span>
-          <span aria-hidden="true">·</span>
-          <span>18 3D Species</span>
-          <span aria-hidden="true">·</span>
-          <span>17 Depth Milestones</span>
         </div>
       </div>
     </div>

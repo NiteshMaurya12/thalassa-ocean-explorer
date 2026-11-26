@@ -58,6 +58,7 @@ export const DepthExplorerHUD: React.FC<DepthExplorerHUDProps> = ({
   const [manualInput, setManualInput] = useState<string>(
     String(Math.round(currentDepth))
   );
+  const [isDetailsExpanded, setIsDetailsExpanded] = useState<boolean>(false);
   const [isDockCollapsed, setIsDockCollapsed] = useState<boolean>(false);
   const [showAssumptions, setShowAssumptions] = useState<boolean>(false);
 
@@ -106,240 +107,229 @@ export const DepthExplorerHUD: React.FC<DepthExplorerHUDProps> = ({
 
   return (
     <>
-      {/* Left Ocean Information Panel — Refined Spacing, Typography, Provenance & Storytelling Beacon */}
+      {/* Compact ~230px Floating Glassmorphism Current Depth Widget (Upper-Left) */}
       <aside
         aria-label="Ocean Depth Telemetry Panel"
-        className="pointer-events-auto absolute top-16 left-4 z-20 w-72 sm:w-80 bg-[#030b18]/85 border border-slate-800/90 rounded-xl px-4 py-3 shadow-xl"
+        data-testid="compact-depth-widget"
+        className="pointer-events-auto absolute top-14 left-3 sm:top-16 sm:left-4 z-20 w-[215px] sm:w-[230px] bg-[#030b18]/62 border border-cyan-500/20 rounded-xl px-3 py-2.5 shadow-lg transition-all duration-300"
       >
-        {/* Header Row: Current Depth & Verified Bathymetric Zone */}
-        <div className="flex items-start justify-between gap-3 border-b border-slate-800/80 pb-2 mb-2">
+        {/* Primary Compact View: Only Current Depth, Zone Name & Small Pressure Indicator */}
+        <div className="flex items-baseline justify-between gap-2">
           <div>
-            <span className="text-[10px] font-mono-tabular uppercase tracking-widest text-slate-400 block mb-0.5">
+            <span className="text-[9px] font-mono-tabular uppercase tracking-widest text-slate-400 block">
               CURRENT DEPTH
             </span>
-            <div className="flex items-baseline">
+            <div className="flex items-baseline mt-0.5">
               <span
                 data-testid="live-depth-value"
-                className="text-2xl sm:text-3xl font-mono-tabular font-bold text-white leading-none tracking-tight"
+                className="text-xl sm:text-2xl font-mono-tabular font-bold text-white leading-none tracking-tight"
               >
                 {Math.round(currentDepth).toLocaleString()}
               </span>
-              <span className="text-xs uppercase font-mono-tabular text-cyan-400 ml-1.5 font-semibold">
+              <span className="text-[11px] uppercase font-mono-tabular text-cyan-400 ml-1 font-semibold">
                 m
               </span>
             </div>
           </div>
 
+          {/* Small Hydrostatic Pressure Indicator */}
           <div className="text-right">
-            <span className="text-[10px] font-mono-tabular uppercase tracking-widest text-cyan-400/90 block mb-0.5">
-              VERIFIED ZONE
-            </span>
-            <span
-              data-testid="live-zone-name"
-              className="text-sm font-semibold text-white block leading-snug"
-            >
-              {activeZone.name}
-            </span>
-            <span className="text-[11px] font-mono-tabular text-slate-400 block">
-              {activeZone.minDepth.toLocaleString()}–
-              {activeZone.maxDepth.toLocaleString()} m
-            </span>
-          </div>
-        </div>
-
-        {/* Dynamic Scientific Readouts with Explicit Data Provenance Labels */}
-        <div className="grid grid-cols-3 gap-2 text-left pb-2 border-b border-slate-800/80">
-          <div className="bg-[#061326]/70 border border-slate-800/80 rounded-lg px-2 py-1.5">
             <span className="text-[9px] font-mono-tabular uppercase tracking-wider text-slate-400 block">
               PRESSURE
             </span>
-            <div className="flex items-baseline mt-0.5">
+            <div className="flex items-baseline justify-end mt-0.5">
               <span
                 data-testid="live-pressure-value"
-                className="text-sm font-mono-tabular font-bold text-white"
+                className="text-xs font-mono-tabular font-semibold text-cyan-300"
               >
                 ~{pressureAtm}
               </span>
-              <span className="text-[10px] font-mono-tabular text-slate-400 ml-1">
+              <span className="text-[10px] font-mono-tabular text-slate-400 ml-0.5">
                 atm
               </span>
             </div>
-            <span className="text-[9px] font-mono-tabular text-cyan-400/80 block mt-0.5">
-              CALC · HYDRO
-            </span>
-          </div>
-
-          <div className="bg-[#061326]/70 border border-slate-800/80 rounded-lg px-2 py-1.5">
-            <span className="text-[9px] font-mono-tabular uppercase tracking-wider text-slate-400 block">
-              SUNLIGHT
-            </span>
-            <div className="flex items-baseline mt-0.5">
-              <span
-                data-testid="live-sunlight-value"
-                className="text-sm font-mono-tabular font-bold text-white"
-              >
-                {sunlightPct}
-              </span>
-              <span className="text-[10px] font-mono-tabular text-slate-400 ml-1">
-                %
-              </span>
-            </div>
-            <span className="text-[9px] font-mono-tabular text-cyan-400/80 block mt-0.5">
-              OPTICAL MODEL
-            </span>
-          </div>
-
-          <div className="bg-[#061326]/70 border border-slate-800/80 rounded-lg px-2 py-1.5">
-            <span className="text-[9px] font-mono-tabular uppercase tracking-wider text-slate-400 block">
-              TEMP (EST)
-            </span>
-            <div className="flex items-baseline mt-0.5">
-              <span
-                data-testid="live-temp-value"
-                className="text-sm font-mono-tabular font-bold text-white"
-              >
-                ~{temperatureC}
-              </span>
-              <span className="text-[10px] font-mono-tabular text-slate-400 ml-1">
-                °C
-              </span>
-            </div>
-            <span className="text-[9px] font-mono-tabular text-amber-300/80 block mt-0.5">
-              MID-LAT REF
-            </span>
           </div>
         </div>
 
-        {/* Visual Storytelling Discovery Milestone Stepper (Shipwrecks, Vents, Records) */}
-        <div className="mt-2 pb-2 border-b border-slate-800/80">
-          <div className="flex items-center justify-between gap-2 mb-1">
-            <span className="text-[10px] font-mono-tabular uppercase tracking-wider text-amber-300 flex items-center gap-1">
-              <Compass className="w-3 h-3 text-amber-400" />
-              <span>
-                MILESTONE ({nearestMilestoneIndex + 1}/{DEPTH_LANDMARKS.length}) ·{' '}
-                {nearestMilestone.depth.toLocaleString()} m
-              </span>
+        {/* Zone Name & Expandable Details Toggle Row */}
+        <div className="mt-1.5 pt-1.5 border-t border-slate-800/70 flex items-center justify-between gap-1.5">
+          <div className="min-w-0">
+            <span
+              data-testid="live-zone-name"
+              className="text-xs font-semibold text-slate-100 truncate block"
+            >
+              {activeZone.name}
             </span>
-
-            <div className="flex items-center gap-1">
-              <button
-                type="button"
-                aria-label="Previous Depth Milestone"
-                disabled={nearestMilestoneIndex === 0}
-                onClick={() => handleStepMilestone(-1)}
-                className="p-0.5 rounded bg-[#071529] border border-slate-700 text-slate-300 hover:text-white hover:border-cyan-400 disabled:opacity-40 cursor-pointer"
-              >
-                <ChevronLeft className="w-3.5 h-3.5" />
-              </button>
-              <button
-                type="button"
-                aria-label="Next Depth Milestone"
-                disabled={nearestMilestoneIndex === DEPTH_LANDMARKS.length - 1}
-                onClick={() => handleStepMilestone(1)}
-                className="p-0.5 rounded bg-[#071529] border border-slate-700 text-slate-300 hover:text-white hover:border-cyan-400 disabled:opacity-40 cursor-pointer"
-              >
-                <ChevronRight className="w-3.5 h-3.5" />
-              </button>
-            </div>
           </div>
 
           <button
             type="button"
-            onClick={() => onChangeDepth(nearestMilestone.depth)}
-            className="w-full text-left bg-[#061224]/90 border border-slate-800/90 hover:border-amber-400/50 rounded-lg px-2.5 py-1.5 transition-colors cursor-pointer"
+            aria-expanded={isDetailsExpanded}
+            aria-label={
+              isDetailsExpanded
+                ? 'Collapse scientific telemetry details'
+                : 'Expand scientific telemetry details'
+            }
+            onClick={() => setIsDetailsExpanded((prev) => !prev)}
+            className="inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] font-mono-tabular text-cyan-300 hover:text-white bg-[#06152b]/70 border border-cyan-500/25 rounded transition-colors cursor-pointer shrink-0"
           >
-            <div className="text-xs font-semibold text-white leading-snug">
-              {nearestMilestone.title}
-            </div>
-            <p className="text-[11px] text-slate-300 leading-tight mt-0.5 line-clamp-2">
-              {nearestMilestone.description}
-            </p>
-          </button>
-        </div>
-
-        {/* Always-Visible Concise Scientific vs Illustrative Provenance Distinction */}
-        <div className="mt-1.5 flex items-center justify-between gap-2 text-[10px] text-slate-400">
-          <span>
-            Zone bounds &amp; <code className="text-cyan-300">P(z)</code>: verified.
-            Temp: illustrative.
-          </span>
-          <button
-            type="button"
-            onClick={() => setShowAssumptions((prev) => !prev)}
-            className="inline-flex items-center gap-1 text-cyan-400 hover:text-cyan-300 cursor-pointer shrink-0 font-medium"
-          >
-            <Info className="w-3 h-3" />
-            <span>Assumptions</span>
-          </button>
-        </div>
-
-        {/* Species visible at current depth / zone */}
-        <div className="mt-2 pt-2 border-t border-slate-800/80">
-          <div className="flex items-center justify-between text-[11px] text-slate-300 mb-1.5 font-medium">
-            <span>
-              {visibleOrganisms.length > 0
-                ? `Active Species Near ${Math.round(currentDepth)} m (${visibleOrganisms.length})`
-                : `Zone Species in ${activeZone.name}`}
-            </span>
-          </div>
-
-          <div className="flex flex-wrap gap-1">
-            {(visibleOrganisms.length > 0 ? visibleOrganisms : zoneOrganisms).map(
-              (org) => {
-                const isAtExactDepth = visibleOrganisms.some(
-                  (v) => v.id === org.id
-                );
-                const isSelected = selectedOrganism?.id === org.id;
-                return (
-                  <button
-                    key={org.id}
-                    type="button"
-                    onClick={() => onSelectOrganism(org)}
-                    className={`px-2 py-0.5 text-[11px] rounded border transition-colors cursor-pointer whitespace-nowrap ${
-                      isSelected
-                        ? 'bg-cyan-950 border-cyan-400 text-white font-medium'
-                        : isAtExactDepth
-                        ? 'bg-[#081b33] border-cyan-500/50 text-cyan-200 hover:border-cyan-400'
-                        : 'bg-[#061020] border-slate-800 text-slate-300 hover:border-slate-600'
-                    }`}
-                  >
-                    {org.commonName}
-                  </button>
-                );
-              }
+            <span>{isDetailsExpanded ? 'Less' : 'Details'}</span>
+            {isDetailsExpanded ? (
+              <ChevronUp className="w-3 h-3" />
+            ) : (
+              <ChevronDown className="w-3 h-3" />
             )}
-          </div>
+          </button>
         </div>
 
-        {/* Detailed Hydrostatic Formula & Illustrative Value Disclosure */}
-        {showAssumptions && (
-          <div className="mt-2 pt-2 border-t border-slate-800 text-[11px] text-slate-300 leading-relaxed space-y-1">
-            <p className="font-semibold text-white">
-              Verified Data vs. Illustrative Reference Models:
-            </p>
-            <p>
-              <strong className="text-cyan-300">Calculated Hydrostatic Pressure:</strong>{' '}
-              <code className="text-cyan-300 font-mono-tabular">
-                P(z) = 1.0 + (ρ · g · z) / 101,325
-              </code>{' '}
-              atm with mean seawater density{' '}
-              <span className="font-mono-tabular">ρ = 1,027 kg/m³</span> and{' '}
-              <span className="font-mono-tabular">g = 9.80665 m/s²</span> (~1 atm
-              per 10.06 m).
-            </p>
-            <p>
-              <strong className="text-amber-300">Illustrative Values:</strong>{' '}
-              Temperature follows a standard mid-latitude thermocline reference
-              curve; 3D organism coordinates mark characteristic depths within
-              verified biological depth ranges.
-            </p>
+        {/* Expandable Details Section: Sunlight, Temperature, Milestones, Species & Provenance */}
+        {isDetailsExpanded && (
+          <div
+            data-testid="expanded-telemetry-details"
+            className="mt-2 pt-2 border-t border-slate-800/80 space-y-2 text-left"
+          >
+            {/* Sunlight & Temperature Secondary Readouts */}
+            <div className="grid grid-cols-2 gap-1.5">
+              <div className="bg-[#061326]/70 border border-slate-800/80 rounded-md px-2 py-1">
+                <span className="text-[8px] font-mono-tabular uppercase tracking-wider text-slate-400 block">
+                  SUNLIGHT (OPTICAL)
+                </span>
+                <div className="flex items-baseline">
+                  <span
+                    data-testid="live-sunlight-value"
+                    className="text-xs font-mono-tabular font-bold text-white"
+                  >
+                    {sunlightPct}
+                  </span>
+                  <span className="text-[9px] font-mono-tabular text-slate-400 ml-0.5">
+                    %
+                  </span>
+                </div>
+              </div>
+
+              <div className="bg-[#061326]/70 border border-slate-800/80 rounded-md px-2 py-1">
+                <span className="text-[8px] font-mono-tabular uppercase tracking-wider text-slate-400 block">
+                  TEMP (EST · REF)
+                </span>
+                <div className="flex items-baseline">
+                  <span
+                    data-testid="live-temp-value"
+                    className="text-xs font-mono-tabular font-bold text-white"
+                  >
+                    ~{temperatureC}
+                  </span>
+                  <span className="text-[9px] font-mono-tabular text-slate-400 ml-0.5">
+                    °C
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Nearest Discovery Milestone Stepper */}
+            <div className="pt-1 border-t border-slate-800/70">
+              <div className="flex items-center justify-between gap-1 mb-1">
+                <span className="text-[9px] font-mono-tabular uppercase tracking-wider text-amber-300 flex items-center gap-1 truncate">
+                  <Compass className="w-2.5 h-2.5 text-amber-400 shrink-0" />
+                  <span>
+                    {nearestMilestone.depth.toLocaleString()} m Milestone
+                  </span>
+                </span>
+
+                <div className="flex items-center gap-0.5 shrink-0">
+                  <button
+                    type="button"
+                    aria-label="Previous Depth Milestone"
+                    disabled={nearestMilestoneIndex === 0}
+                    onClick={() => handleStepMilestone(-1)}
+                    className="p-0.5 rounded bg-[#071529] border border-slate-700 text-slate-300 hover:text-white hover:border-cyan-400 disabled:opacity-40 cursor-pointer"
+                  >
+                    <ChevronLeft className="w-3 h-3" />
+                  </button>
+                  <button
+                    type="button"
+                    aria-label="Next Depth Milestone"
+                    disabled={
+                      nearestMilestoneIndex === DEPTH_LANDMARKS.length - 1
+                    }
+                    onClick={() => handleStepMilestone(1)}
+                    className="p-0.5 rounded bg-[#071529] border border-slate-700 text-slate-300 hover:text-white hover:border-cyan-400 disabled:opacity-40 cursor-pointer"
+                  >
+                    <ChevronRight className="w-3 h-3" />
+                  </button>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => onChangeDepth(nearestMilestone.depth)}
+                className="w-full text-left bg-[#061224]/85 border border-slate-800/90 hover:border-amber-400/50 rounded-md px-2 py-1 transition-colors cursor-pointer"
+              >
+                <div className="text-[11px] font-semibold text-white leading-tight truncate">
+                  {nearestMilestone.title}
+                </div>
+              </button>
+            </div>
+
+            {/* Active Species Quick Select */}
+            <div className="pt-1 border-t border-slate-800/70">
+              <div className="text-[10px] text-slate-400 mb-1">
+                Species ({visibleOrganisms.length || zoneOrganisms.length})
+              </div>
+              <div className="flex flex-wrap gap-1 max-h-24 overflow-y-auto">
+                {(visibleOrganisms.length > 0
+                  ? visibleOrganisms
+                  : zoneOrganisms
+                ).map((org) => {
+                  const isSelected = selectedOrganism?.id === org.id;
+                  return (
+                    <button
+                      key={org.id}
+                      type="button"
+                      onClick={() => onSelectOrganism(org)}
+                      className={`px-1.5 py-0.5 text-[10px] rounded border transition-colors cursor-pointer whitespace-nowrap ${
+                        isSelected
+                          ? 'bg-cyan-950 border-cyan-400 text-white font-medium'
+                          : 'bg-[#061224] border-slate-800 text-slate-300 hover:border-cyan-400/50 hover:text-white'
+                      }`}
+                    >
+                      {org.commonName}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Scientific Provenance & Assumptions Disclosure */}
+            <div className="pt-1 border-t border-slate-800/70 flex items-center justify-between text-[9px] text-slate-400">
+              <span>P(z): calc · Temp: est</span>
+              <button
+                type="button"
+                onClick={() => setShowAssumptions((prev) => !prev)}
+                className="inline-flex items-center gap-0.5 text-cyan-400 hover:text-cyan-300 cursor-pointer"
+              >
+                <Info className="w-2.5 h-2.5" />
+                <span>Formula</span>
+              </button>
+            </div>
+
+            {showAssumptions && (
+              <div className="pt-1 border-t border-slate-800 text-[10px] text-slate-300 leading-snug">
+                <code className="text-cyan-300 font-mono-tabular block mb-0.5">
+                  P(z) = 1 + (ρ·g·z)/101325 atm
+                </code>
+                <span>
+                  ρ=1,027 kg/m³. Temp &amp; 3D organism depths represent
+                  illustrative mid-latitude reference profiles.
+                </span>
+              </div>
+            )}
           </div>
         )}
       </aside>
 
       {/* Vertical Depth Slider Rail (Right side when species panel is closed) */}
       {!selectedOrganism && (
-        <div className="pointer-events-auto hidden md:flex flex-col items-center justify-between absolute top-20 bottom-28 right-4 z-20 w-11 overflow-hidden bg-[#030b18]/84 border border-slate-800/90 rounded-xl py-3 px-1 shadow-lg">
+        <div className="pointer-events-auto hidden md:flex flex-col items-center justify-between absolute top-20 bottom-28 right-4 z-20 w-10 overflow-hidden bg-[#030b18]/65 border border-cyan-500/20 rounded-xl py-3 px-1 shadow-lg">
           <span className="text-[10px] font-mono-tabular text-cyan-400 shrink-0">
             0m
           </span>
@@ -368,7 +358,7 @@ export const DepthExplorerHUD: React.FC<DepthExplorerHUDProps> = ({
           <button
             type="button"
             onClick={() => setIsDockCollapsed((prev) => !prev)}
-            className="inline-flex items-center gap-1.5 px-3 py-1 text-[11px] font-medium text-slate-200 bg-[#030b18]/88 border border-slate-800/90 rounded-full hover:border-cyan-400/60 hover:text-cyan-300 transition-colors cursor-pointer shadow"
+            className="inline-flex items-center gap-1.5 px-3 py-1 text-[11px] font-medium text-slate-200 bg-[#030b18]/78 border border-cyan-500/20 rounded-full hover:border-cyan-400/60 hover:text-cyan-300 transition-colors cursor-pointer shadow"
           >
             {isDockCollapsed ? (
               <>
@@ -385,7 +375,7 @@ export const DepthExplorerHUD: React.FC<DepthExplorerHUDProps> = ({
         </div>
 
         {!isDockCollapsed && (
-          <div className="pointer-events-auto w-full max-w-3xl bg-[#030b18]/88 border border-slate-800/90 rounded-xl px-3.5 py-2.5 shadow-2xl">
+          <div className="pointer-events-auto w-full max-w-3xl bg-[#030b18]/78 border border-cyan-500/20 rounded-xl px-3.5 py-2.5 shadow-2xl">
             {/* Row 1: Compact Depth Slider + Go to Depth Manual Input */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 mb-2">
               <label
